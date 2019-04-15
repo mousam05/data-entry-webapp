@@ -1,0 +1,49 @@
+ <html>
+
+ <head>
+ 	<title>Coral Blockchain: Assessment for Internship</title>
+ </head>
+
+ <body bgcolor = "moccasin">
+ 	<hr>
+ 	<h1> Coral Blockchain: Assessment for Internship </h1>
+ 	<hr>
+ 	<h3><font color="firebrick"> Insert or Update User: </font></h3>
+
+ 	<i>All fields are required. <br>
+ 	   Username must be max 25 chars long. <br>
+ 	   Phone no. must be 10-digit number. <br>
+ 	   Email id and password must be max 50 chars long. <br>
+ 	   For updating a user, enter the already registered email id. </i><br><br>
+ 	<form method="post">
+	  User Name: <br>
+	  <input type="text" name="user_name" maxlength=25 required><br>
+	  Password: <br>
+	  <input type="password" name="password" maxlength=50 required><br>
+	  Email Id: <br>
+	  <input type="email" name="email" maxlength=50 required><br>
+	  Phone number: <br>
+	  <input type="tel" name="phone_number" pattern="[0-9]{10}" maxlength=10 required>
+	  <br><br>
+	  <input type="submit" name="submit_credentials" value="Insert or Update">
+	</form> 
+
+	<hr>
+	<br>
+	<h3><font color="firebrick">Find User: </font></h3>
+	 <form method="post">
+	  Email Id: <br>
+	  <input type="email" name="email_search" maxlength=50 required><br>
+	  <br>
+	  <input type="submit" name="submit_email_search" value="Find">
+	</form>
+
+	<hr>
+
+	{% if message != "" %}
+		<p><strong> {{ message }} </strong>
+		<hr>
+	{% endif %}
+
+ </body>
+ </html>
