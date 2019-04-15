@@ -29,3 +29,22 @@ The challenging part of this project was the testing. I had to test for all scen
 
 ### Screenshots
 
+Entering data in the web form:
+
+![](https://github.com/mousam05/data-entry-webapp/blob/master/entering_data.png "Image1")
+
+On successful insertion:
+
+![](https://github.com/mousam05/data-entry-webapp/blob/master/entered_success.png "Image2")
+
+Searching for a record that exists:
+
+![](https://github.com/mousam05/data-entry-webapp/blob/master/search1.png "Image3")
+![](https://github.com/mousam05/data-entry-webapp/blob/master/search_found.png "Image4")
+
+Searching for a record that does not exist:
+
+![](https://github.com/mousam05/data-entry-webapp/blob/master/search2.png "Image5")
+![](https://github.com/mousam05/data-entry-webapp/blob/master/search_not_found.png "Image6")
+
+
