@@ -1,26 +1,31 @@
-import MySQLdb
-
 from flask import Flask, request, render_template, flash
+import mysql.connector
 from datetime import datetime
 
-MYSQL_SERVER_HOST = "db-intern.ciupl0p5utwk.us-east-1.rds.amazonaws.com"
+MYSQL_SERVER_HOST = "193.84.177.213"
 MYSQL_SERVER_PORT = 3306
-MYSQL_USER = "dummyUser"
-MYSQL_PASSWORD = "dummyUser01"
-MYSQL_DB_NAME = "db_intern"
-MYSQL_TABLE_NAME = "userData"
+MYSQL_USER = "s241054_dev"
+MYSQL_PASSWORD = "P4ss3v3ntr4pp3r"
+MYSQL_DB_NAME = "s241054_development_eventiverse"
+MYSQL_TABLE_NAME = "event"
 
-# database handling functions
-#############################
 
-# connect to the database
 def get_db():
-	db = MySQLdb.connect(MYSQL_SERVER_HOST, MYSQL_USER, MYSQL_PASSWORD,
-		MYSQL_DB_NAME, port = MYSQL_SERVER_PORT, charset='utf8', use_unicode=True )
+    try:
+        db = mysql.connector.connect(
+            host=MYSQL_SERVER_HOST,
+            user=MYSQL_USER,
+            password=MYSQL_PASSWORD,
+            database=MYSQL_DB_NAME,
+            port=MYSQL_SERVER_PORT,
+            charset='utf8',
+            use_unicode=True
+        )
+        return db
+    except mysql.connector.Error as err:
+        raise Exception("Error al conectar a la base de datos") from err
 
-	return db
 
-# get the record corresponding to an email id
 def find_record_by_email(db, email):
 	find_query = 'select * from {0} where emailId = "{1}"'.format(MYSQL_TABLE_NAME, email)
 	cursor = db.cursor()
@@ -73,7 +78,7 @@ def main():
 				db = get_db()
 				status = insert_or_update_record(db, user_name, password, email, phone)
 				db.close()
-			except MySQLdb.Error as e:
+			except mysql.connector.Error as e:
 				message = "There was an error inserting the record."
 				
 
@@ -85,7 +90,7 @@ def main():
 				db = get_db()
 				record = find_record_by_email(db, email_search)
 				db.close()
-			except MySQLdb.Error as e:
+			except mysql.connector.Error as e:
 				message = "There was an error fetching records."
 
 			if record == []:
