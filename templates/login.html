@@ -1,0 +1,13 @@
+{% from "form_helpers.html" import render_field %}
+<form method="POST" action="/">
+    {{ form.csrf_token }}
+  <dl>
+    {{ render_field(form.name) }}
+    {{ render_field(form.email) }}
+    {{ render_field(form.password) }}
+    {{ render_field(form.confirm) }}
+    {{ render_field(form.role) }}
+    {{ render_field(form.accept_tos) }}
+  </dl>
+  <p><input type=submit value=Register>
+</form>
