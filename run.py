@@ -1,4 +1,5 @@
-from flask import Flask, request, render_template, flash, redirect
+from flask import Flask, request, render_template, flash
+from flask_bootstrap import Bootstrap
 import mysql.connector
 from datetime import datetime
 
@@ -61,6 +62,7 @@ def insert_or_update_record(db, user_name, password, email, phone):
 
 
 app = Flask(__name__)
+Bootstrap(app)
 
 
 @app.route('/', methods=['GET', 'POST'])
