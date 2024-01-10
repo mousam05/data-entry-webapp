@@ -63,38 +63,46 @@ def insert_or_update_record(db, user_name, password, email, phone):
 app = Flask(__name__)
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def login():
     form = login_form(request.form)
     #form = login_form()
     if request.method == 'POST' and form.validate():
         create_user(form)
-        return redirect('/success')
+        #return redirect('/success')
     return render_template('login.html', form=form)
 
 
 def create_user(form):
+    global db
+    user_name = form.name.data
+    password = form.password.data
+    email = form.email.data
+    role = form.role.data
+    insert_query = 'insert into {0} (name, password, email, role) values ("{1}", "{2}", "{3}", "{4}")'.format(
+        USER_TABLE, user_name, password, email, role
+    )
 
-        user_name = request.form['name']
-        password = request.form['password']
-        email = request.form['email']
-        role = request.form['role']
-        insert_query = 'insert into {0} values ("{1}", "{2}", "{3}", "{4}", "{5}")'.format(USER_TABLE,
-                                                                                           user_name, email, role,
-                                                                                           password)
-        message = "Record inserted successfully."
-        flash('Olee te has registradoooo!')
+    message = "Record inserted successfully."
+    flash('Olee te has registradoooo!')
 
-        try:
-            db = get_db()
-            cursor = db.cursor()
-            cursor.execute(insert_query)
-            db.commit()
+    try:
+        db = get_db()
+        cursor = db.cursor()
+        #cursor.execute(insert_query, data)
+        cursor.execute(insert_query)
+        print("Query:", insert_query)
+        db.commit()
+    except mysql.connector.Error as e:
+        print("MySQL Error:", e)
+        print("Query:", insert_query)
+        raise Exception("Hubo un error al ejecutar la consulta SQL") from e
+    finally:
+        if db:
             db.close()
-        except mysql.connector.Error as e:
-            message = "There was an error inserting the record."
 
-@app.route('/', methods=['GET', 'POST'])
+
+@app.route('/other', methods=['GET', 'POST'])
 def main():
     message = ""
 
@@ -138,7 +146,7 @@ def main():
                     ", Timestamp: " + record[4]
                 message = "Record found: \n" + repr(record_show)
 
-    return render_template('main.html', message=message)
+    return render_template('login.html', message=message)
 
 
 if __name__ == '__main__':
