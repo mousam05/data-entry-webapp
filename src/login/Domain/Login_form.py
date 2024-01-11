@@ -1,7 +1,7 @@
 from wtforms import Form, BooleanField, StringField, PasswordField, validators
 
 
-class login_form(Form):
+class Login_form(Form):
     name = StringField('Name', [validators.Length(min=4, max=25)])
     email = StringField('Email Address', [validators.Length(min=6, max=35)])
     password = PasswordField('New Password', [

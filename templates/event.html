@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% from "form_helpers.html" import render_field %}
+{% block content %}
+<h1>Events list</h1>
+
+    <ul>
+        {% for event in events %}
+            <li>{{ event.title }} - {{ event.startDate|timestampformat('%Y-%m-%d %H:%M:%S') }} - {{ event.city }} - {{ event.addess}}</li>
+        {% endfor %}
+
+    </ul>
+{% endblock %}

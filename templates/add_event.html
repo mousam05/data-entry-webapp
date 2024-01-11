@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% from "form_helpers.html" import render_field %}
+{% block content %}
+    <form method="POST" action="/">
+        {{ form.csrf_token }}
+      <dl>
+        {{ render_field(form.title) }}
+        {{ render_field(form.startDate) }}
+        {{ render_field(form.endDate) }}
+        {{ render_field(form.country) }}
+        {{ render_field(form.address) }}
+        {{ render_field(form.province) }}
+        {{ render_field(form.city) }}
+        {{ render_field(form.summary) }}
+        {{ render_field(form.description) }}
+        {{ render_field(form.originalDescription) }}
+        {{ render_field(form.ticketURL) }}
+        {{ render_field(form.url) }}
+      </dl>
+      <p><input type=submit value=Register>
+    </form>
+{% endblock %}

@@ -3,9 +3,8 @@ from flask_bootstrap import Bootstrap
 import mysql.connector
 from datetime import datetime
 
-# from sqlalchemy.testing.pickleable import User
-
-from src.login.Domain.login_form import login_form
+from src.Event.Domain.Event_form import Event_form
+from src.login.Domain.Login_form import Login_form
 
 MYSQL_SERVER_HOST = "193.84.177.213"
 MYSQL_SERVER_PORT = 3306
@@ -63,16 +62,46 @@ def insert_or_update_record(db, user_name, password, email, phone):
 
 app = Flask(__name__)
 Bootstrap(app)
+def timestampformat(value, format='%Y-%m-%d %H:%M:%S'):
+    from datetime import datetime
+    return datetime.fromtimestamp(value).strftime(format)
+# Agregar el filtro a la aplicación Flask
+app.jinja_env.filters['timestampformat'] = timestampformat
 
-
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    form = login_form(request.form)
-    #form = login_form()
+    form = Login_form(request.form)
     if request.method == 'POST' and form.validate():
         create_user(form)
         #return redirect('/success')
     return render_template('login.html', form=form)
+
+@app.route('/', methods=['GET', 'POST'])
+def event():
+    #form = Event_form(request.form)
+    events_list = event_list_collection()
+    return render_template('event.html', events=events_list)
+
+
+
+def event_list_collection():
+    global db
+    query = "select * from event order by id desc, startDate desc"
+    try:
+        db = get_db()
+        cursor = db.cursor(dictionary=True)
+        cursor.execute(query)
+        print("Query:", query)
+        events = cursor.fetchall()
+        return events
+    except mysql.connector.Error as e:
+        print("MySQL Error:", e)
+        print("Query:", query)
+        raise Exception("Hubo un error al ejecutar la consulta SQL") from e
+    finally:
+        if db:
+            db.close()
+
 
 
 def create_user(form):
