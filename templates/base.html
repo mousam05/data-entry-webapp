@@ -1,14 +1,31 @@
 <!doctype html>
 <html>
   <head>
-    {% extends "bootstrap/base.html" %}
     {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <title>{% block title %}{% endblock %} - EvnBackOffc</title>
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"/>
+      <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+      <title>{% block title %}{% endblock %} - EvnBackOffc</title>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light mx-3">
+        <a class="navbar-brand" href="{{url_for('event')}}">
+          <img src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+          Eventiverse Back office
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{{url_for('event')}}">Events</a>
+            </li>
+            <li class="nav-item mr-sm-2">
+              <a class="nav-link" href="{{url_for('login')}}">Login</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
     {% endblock %}
+
   </head>
   <body>
-    <div id="content">
+    <div id="content" class="container-lg">
         {% block content %}{% endblock %}
     </div>
     <div id="footer">

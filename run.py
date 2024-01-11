@@ -76,7 +76,7 @@ def login():
         #return redirect('/success')
     return render_template('login.html', form=form)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def event():
     #form = Event_form(request.form)
     events_list = event_list_collection()
