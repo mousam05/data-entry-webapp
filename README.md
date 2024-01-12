@@ -17,7 +17,7 @@ deactivate
 pip3 freeze > requirements.txt
 pip3 install -r requirements.txt 
 
-python3 run.py --reload
+python3 main.py --reload
 
 http://127.0.0.1:5000/admin/
 
